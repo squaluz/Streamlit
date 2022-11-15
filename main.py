@@ -1,6 +1,7 @@
+#credits: Pythonology https://www.youtube.com/watch?v=eJk_ySnVLmU
 import streamlit as st
 import requests
-#import pycountry
+import pycountry
 
 #from newsapi import NewsApiClient
 #from api import apiKEY <-- change api to variable and store in a file
@@ -8,17 +9,9 @@ import requests
 
 st.title('News App')
 
-url = f"https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=ca8cd2895b1445848a4767c3945d909b"
+url = f"https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=ca8cd2895b1445848a4767c3945d909b"
 
-r = requests.get(url)
-r = r.json()
-articles = r['articles']
-for article in articles:
-    st.header(article['title'])
-    st.write(article['source']['name'])
-    st.write(article['description'])
 
-'''
 # Load data
 #df_agg = pd.read_csv('Aggregated_Metrics_By_Video.csv').iloc[1:,:]
 
@@ -30,7 +23,8 @@ with col2:
     btn = st.button('Enter')
 
 if btn:
-    url = f"https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=ca8cd2895b1445848a4767c3945d909b"
+    country = pycountry.countries.get(name=user).alpha_2
+    url = f"https://newsapi.org/v2/top-headlines?country={country}&category={category}&apiKey=ca8cd2895b1445848a4767c3945d909b"
 
     r = requests.get(url)
     r = r.json()
@@ -39,4 +33,3 @@ if btn:
         st.header(article['title'])
         st.write(article['source']['name'])
         st.write(article['description'])
-'''
