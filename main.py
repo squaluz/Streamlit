@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-import pycountry
+#import pycountry
 
 #from newsapi import NewsApiClient
 #from api import apiKEY <-- change api to variable and store in a file
