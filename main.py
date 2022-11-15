@@ -1,36 +1,42 @@
 import streamlit as st
+import requests
+import pycountry
 
-from newsapi import NewsApiClient
-from summarizer import summarize
+#from newsapi import NewsApiClient
+#from api import apiKEY <-- change api to variable and store in a file
+#from summarizer import summarize
 
-st.write('Hello World')
+st.title('News App')
 
+url = f"https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=ca8cd2895b1445848a4767c3945d909b"
+
+r = requests.get(url)
+r = r.json()
+articles = r['articles']
+for article in articles:
+    st.header(article['title'])
+    st.write(article['source']['name'])
+    st.write(article['description'])
+
+'''
 # Load data
 #df_agg = pd.read_csv('Aggregated_Metrics_By_Video.csv').iloc[1:,:]
 
+col1, col2 = st.columns([3,1])
+with col1: 
+    user = st.text_input('Enter Country Name')
+with col2: 
+    category = st.radio('Choose a news category',('General','Business','Science','Technology'))
+    btn = st.button('Enter')
 
-class Aggregator:
-    # Init
-    newsapi = NewsApiClient(api_key='ca8cd2895b1445848a4767c3945d909b')
+if btn:
+    url = f"https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=ca8cd2895b1445848a4767c3945d909b"
 
-    # /v2/top-headlines
-    top_headlines = newsapi.get_top_headlines(q='tesla',
-                                            sources='bbc-news,the-verge',
-                                            category='business',
-                                            language='en',
-                                            country='us')
-
-    # /v2/everything
-    all_articles = newsapi.get_everything(q='tesla',
-                                        sources='bbc-news,the-verge',
-                                        domains='bbc.co.uk,techcrunch.com',
-                                        from_param='2021-12-01',
-                                        to='2021-12-12',
-                                        language='en',
-                                        sort_by='relevancy',
-                                        page=2)
-
-    # /v2/top-headlines/sources
-    sources = newsapi.get_sources()
-    newsapi.Debug(sources)
-
+    r = requests.get(url)
+    r = r.json()
+    articles = r['articles']
+    for article in articles:
+        st.header(article['title'])
+        st.write(article['source']['name'])
+        st.write(article['description'])
+'''
